@@ -8,6 +8,9 @@ class CalcLogic:
 
         operators = "+-*/."
 
+        if current_on_screen == "Error":
+            self.expression = ""
+
         if self.result_shown and key not in operators and key not in ['=', 'E', 'C']:
             self.expression = ""
             self.result_shown = False
@@ -32,11 +35,19 @@ class CalcLogic:
 
     def calculate(self):
         try:
-            result = str(eval(self.expression))
-            self.expression = result
+            result = eval(self.expression)
+            form_result = f"{result:.2f}"
+
+            if result == int(result):
+                form_result = f"{int(result):,}"
+
+            self.expression = str(result)
             self.result_shown = True
-            return result
-        except:
+
+            return form_result
+
+        except Exception as e:
+            print(f"Error de calculo {e}")
             self.expression = ""
             self.result_shown = False
             return "Error"
