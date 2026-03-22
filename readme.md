@@ -5,4 +5,4 @@ Este pequeño proyecto personal de una calculadora básica para pc está hecho c
 
 * **Lógica:** Separada en `logic/`
 * **UI:** Ubicada en `ui/`
-* **Estilos:** Colores definidos en `styles/`
+* **Estilos:** Colores y temas definidos en `styles/`
