@@ -34,6 +34,9 @@ class CalcUI:
         for i in range(5):
             window.grid_rowconfigure(i, weight=1)
 
+        self.pant.bind('<Key>', self.on_key_board)
+        self.pant.focus_set()
+
     def on_press(self, key):
         if key == "=":
             res = self.logic.calculate(self.pant.get())
@@ -46,4 +49,25 @@ class CalcUI:
             self.pant.delete(0, tk.END)
             self.pant.insert(tk.END, ntext)
         else:
+            current = self.pant.get()
+            operators = "+-*/."
+            if key in operators and current and current[-1] in operators:
+                self.pant.delete(len(current)-1, tk.END)
             self.pant.insert(tk.END, key)
+
+    def on_key_board(self, event):
+        print(f"DEBUG -> Caracter: '{event.char}' | Nombre Tecla: '{event.keysym}'")
+        sym = event.keysym
+        char =  event.char
+
+        if sym in ["Return", "KP_Enter"]:
+            self.on_press("=")
+        elif sym == "BackSpace":
+            self.on_press("E")
+        elif sym == "Escape":
+            self.on_press("C")
+        elif char in "0123456789+-*/.,":
+            norm_key = "." if char == "," else char
+            self.on_press(norm_key)
+        return "break"
+
