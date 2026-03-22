@@ -38,22 +38,12 @@ class CalcUI:
         self.pant.focus_set()
 
     def on_press(self, key):
-        if key == "=":
-            res = self.logic.calculate(self.pant.get())
-            self.pant.delete(0, tk.END)
-            self.pant.insert(tk.END, res)
-        elif key == "C":
-            self.pant.delete(0, tk.END)
-        elif key == "E":
-            ntext = self.logic.backspace(self.pant.get())
-            self.pant.delete(0, tk.END)
-            self.pant.insert(tk.END, ntext)
-        else:
-            current = self.pant.get()
-            operators = "+-*/."
-            if key in operators and current and current[-1] in operators:
-                self.pant.delete(len(current)-1, tk.END)
-            self.pant.insert(tk.END, key)
+        new_text = self.logic.process_input(key, self.pant.get())
+
+        self.pant.delete(0, tk.END)
+        self.pant.insert(tk.END, new_text)
+
+        self.pant.focus_set()
 
     def on_key_board(self, event):
         print(f"DEBUG -> Caracter: '{event.char}' | Nombre Tecla: '{event.keysym}'")
@@ -70,4 +60,3 @@ class CalcUI:
             norm_key = "." if char == "," else char
             self.on_press(norm_key)
         return "break"
-
