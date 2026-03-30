@@ -4,7 +4,7 @@ class CalcLogic:
         self.result_shown = False
 
     def process_input(self, key, current_on_screen):
-        self.expression = current_on_screen
+        self.expression = current_on_screen.replace(",","")
 
         operators = "+-*/."
 
